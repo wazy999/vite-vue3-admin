@@ -40,13 +40,14 @@ export default defineComponent({
       }
       curPath.value = to.path
       tagList.set(curPath.value, {title:routes.meta?.title as string})
+      
       breadcrumbList.length = 0
       if(typeof to.meta.parentTitle === "string") breadcrumbList.push({title: to.meta.parentTitle})
       if(typeof to.meta.title === "string") breadcrumbList.push({title: to.meta.title})
     })
 
     const tagList:Map<string, { title:string }> = reactive(new Map())
-    tagList.set(curPath.value, {title:routes.meta?.title as string})
+    tagList.set(routes.path, {title:routes.meta?.title as string})
     function closeTag(pathname:string) {
       keepAliveArr.splice(keepAliveArr.findIndex(el => pathname.includes(el)), 1)
       tagList.delete(pathname)

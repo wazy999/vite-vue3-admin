@@ -8,7 +8,7 @@
 		<router-view v-slot="{ Component }" :key="key">
 			<Transition>
 				<keep-alive :include="keepAliveArr">
-						<component class="view" :is="Component" />
+					<component class="view" :is="Component" />
 				</keep-alive>
 			</Transition>
 		</router-view>

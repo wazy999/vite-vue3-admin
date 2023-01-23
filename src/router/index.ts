@@ -1,5 +1,10 @@
 import { createRouter, createWebHashHistory } from "vue-router"
 import Layout from "../layout/index.vue"
+import Login from "@/views/login/index.vue"
+import { useLocalStorage } from "@vueuse/core"
+import { useLoginStore } from "../store"
+import NProcess from "nprogress"
+import "nprogress/nprogress.css"
 
 const routes = 
 [{
@@ -53,11 +58,34 @@ const routes =
 				},
 				component:() => import ('../views/chart/other.vue'), 
 			}]
-	},
+	},{
+		path:"/login",
+		name:"login",
+		component:Login
+	}
 ]
 const router = createRouter({
 	history:createWebHashHistory(),
 	routes
+})
+
+router.beforeEach((to, from, next) => {
+	NProcess.start()
+	if(to.path === "/login"){
+		next()
+	}else{
+		let token = useLoginStore().access_token;
+		if(!token) localStorage.getItem("access_token")
+		if(!token){
+			next("/login")
+		}else{
+			next()
+		}
+	}
+})
+
+router.afterEach((to, from) => {
+	NProcess.done()
 })
 
 export default router
