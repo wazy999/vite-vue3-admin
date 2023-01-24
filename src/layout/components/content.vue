@@ -1,7 +1,4 @@
 <template>
-	<a-breadcrumb style="margin: 16px 0">
-		<a-breadcrumb-item v-for="item in props.breadcrumbList" :key="item">{{item.title}}</a-breadcrumb-item>
-	</a-breadcrumb>
 	<a-layout-content
 		:style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
 	>
@@ -19,10 +16,7 @@
 import { computed, defineProps, watch } from 'vue'
 import { useCommonStore } from '@/store';
 import { useRoute } from 'vue-router';
-import {  } from 'fs';
-const props = defineProps<{
-	breadcrumbList:{ title:string }[]
-}>()
+const props = defineProps<{}>()
 const route = useRoute();
 const keepAliveArr =  useCommonStore().$state.keepAliveArr
 const key = computed(()=> route.path)

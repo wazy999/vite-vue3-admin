@@ -1,11 +1,11 @@
 <template>
   <a-layout >
-    <Head />
+    <Head :breadcrumbList="breadcrumbList"/>
     <a-layout>
 			<right-side />
       <a-layout style="padding: 0 24px 24px">
 				<Tag :tagList="tagList" :curPath="curPath" @closeTag="closeTag" @routerLink="routerLink"></Tag>
-				<Content :breadcrumbList="breadcrumbList"/>	
+				<Content />	
       </a-layout>
     </a-layout>
   </a-layout>
@@ -41,6 +41,7 @@ export default defineComponent({
       curPath.value = to.path
       tagList.set(curPath.value, {title:routes.meta?.title as string})
       
+      console.log(tagList,"tagList")
       breadcrumbList.length = 0
       if(typeof to.meta.parentTitle === "string") breadcrumbList.push({title: to.meta.parentTitle})
       if(typeof to.meta.title === "string") breadcrumbList.push({title: to.meta.title})
@@ -76,6 +77,10 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+// ::v-deep .ant-layout-content {
+//   max-height: 80%;
+//   overflow: hidden;
+// }
 .site-layout-background {
   background: #fff;
 }

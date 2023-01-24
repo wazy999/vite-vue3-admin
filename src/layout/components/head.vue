@@ -1,12 +1,9 @@
 <template>
     <a-layout-header class="header">
 			<img src="@/assets/image/svg/logo.svg" />
-			<a-menu
-				theme="dark"
-				mode="horizontal"
-				:style="{ lineHeight: '64px' }"
-			>
-			</a-menu>
+			<a-breadcrumb class="breadcrumb" color="#fff">
+				<a-breadcrumb-item v-for="item in props.breadcrumbList" :key="item">{{item.title}}</a-breadcrumb-item>
+			</a-breadcrumb>
 			<a-dropdown :trigger="['click']">
 				<a-avatar style="background-color: #87d068" class="ant-dropdown-link" @click.prevent>
 					<template #icon>
@@ -39,7 +36,9 @@ enum configKey {
 const avatarConfigList:IAvatarConfigList[] = [
 	{key:configKey.LOGIN , content:"退出登录"}
 ]
-
+const props = defineProps<{
+	breadcrumbList:{ title:string }[]
+}>()
 function handleMenunClick(item:IAvatarConfigList) {
 	if(item.key === configKey.LOGIN) {
 		useLoginStore().logout()
@@ -54,5 +53,19 @@ function handleMenunClick(item:IAvatarConfigList) {
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
+}
+.ant-breadcrumb > span:last-child {
+    color: rgb(255 255 255 / 85%);
+}
+.ant-breadcrumb {
+	color:rgb(161, 161, 161)
+}
+::v-deep .ant-breadcrumb-separator {
+	color:#fff
+}
+.breadcrumb {
+	margin: 16px;
+	margin-left: 30px;
+	flex: 1;
 }
 </style>
